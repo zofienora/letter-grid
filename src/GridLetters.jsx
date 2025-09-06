@@ -1,9 +1,12 @@
 // src/GridLetters.jsx
 
 const LETTERS = [
-  "A","B","C","D","E","F","G","H","I","J","K","L","M",
-  "N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
-  "Ä","Ö","Ü","Ï"
+  "M","X","A","Ö","K",
+  "E","U","B","Y","Ï",
+  "N","C","L","Ä","S",
+  "J","Z","D","O","T",
+  "F","P","G","R","H",
+  "Q","Ü","I","V","W"
 ];
 
 const COLS = 5; // fixed 5 columns for your mobile layout
