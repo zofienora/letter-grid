@@ -12,17 +12,14 @@ const LETTERS = [
 
 const COLS = 5;
 const ROWS = LETTERS.length / COLS;
-const BASE = 36;    // base px font size
-const STEP = 40;    // +10px per hover
+const BASE = 36;   // px
+const STEP = 40;   // +10px per interaction
 
 export default function GridLetters() {
   const [bumps, setBumps] = useState(Array(LETTERS.length).fill(0));
 
-  function grow(i) {
-    setBumps((prev) =>
-      prev.map((n, idx) => (idx === i ? n + 1 : n))
-    );
-  }
+  const grow = (i) =>
+    setBumps(prev => prev.map((n, idx) => (idx === i ? n + 1 : n)));
 
   return (
     <div
@@ -33,19 +30,33 @@ export default function GridLetters() {
       }}
     >
       {LETTERS.map((ch, i) => {
-        const scale = 1 + (STEP * bumps[i]) / BASE; // keeps the “+10px per hover” math
+        const scale = 1 + (STEP * bumps[i]) / BASE;
+
         return (
           <button
             key={ch + i}
             className="tile"
-            onMouseEnter={() => grow(i)}
+            // Desktop mouse: grow when pointer enters (hover)
+            onPointerEnter={(e) => {
+              if (e.pointerType === "mouse") grow(i);
+            }}
+            // Touch/Pen: grow on tap/press
+            onPointerDown={(e) => {
+              if (e.pointerType === "touch" || e.pointerType === "pen") {
+                grow(i);
+              }
+            }}
+            // Keyboard: Enter / Space to grow
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                grow(i);
+              }
+            }}
           >
             <motion.span
               className="letter"
-              style={{
-                fontSize: `${BASE}px`,
-                lineHeight: 1,
-              }}
+              style={{ fontSize: `${BASE}px`, lineHeight: 1 }}
               animate={{ scale }}
               transition={{ type: "spring", stiffness: 260, damping: 20 }}
             >
