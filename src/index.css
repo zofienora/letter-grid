@@ -1,9 +1,80 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* src/index.css */
 
-/* optional: smooth fonts */
-html {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* --- reset / base --- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter,
+    "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  color: #0a0a0a;
+  background: #ffffff;
 }
+
+/* optional dark mode base */
+@media (prefers-color-scheme: dark) {
+  body { background: #0a0a0a; color: #f5f5f5; }
+}
+
+/* --- grid layout --- */
+.grid-viewport {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  gap: 8px;                     /* space between tiles */
+  padding: 8px;                 /* margin from screen edge */
+  /* columns fixed to 5 for mobile view */
+  grid-template-columns: repeat(5, 1fr);
+  /* rows will be set inline from JS: repeat(n, 1fr) */
+  background: inherit;          /* keep page bg */
+}
+
+/* --- tile and letter --- */
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .tile {
+    border-color: #262626;
+    background: rgba(20,20,20,0.6);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+}
+
+.tile:focus {
+  outline: 2px solid #6366f1; /* accessible focus ring */
+  outline-offset: 2px;
+}
+
+.letter {
+  font-size: clamp(22px, 5.5vw, 36px);   /* scales on small screens */
+  line-height: 1;
+  transition: transform 180ms ease, color 180ms ease;
+  user-select: none;
+}
+
+/* base fonts cycle for variety */
+.font-sans { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Helvetica, Arial; }
+.font-serif { font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif; }
+.font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+
+/* hover/focus effects (pure CSS) */
+.tile:hover .letter,
+.tile:focus .letter {
+  transform: rotate(6deg) scale(1.12);
+  color: #4f46e5; /* indigo */
+}
+
+/* subtle tile lift on hover */
+.tile:hover { transform: translateY(-2px); }
