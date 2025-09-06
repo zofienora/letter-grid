@@ -1,8 +1,10 @@
 // src/GridLetters.jsx
 
-const LETTERS = Array.from({ length: 26 }, (_, i) =>
-  String.fromCharCode(65 + i)
-);
+const LETTERS = [
+  "A","B","C","D","E","F","G","H","I","J","K","L","M",
+  "N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+  "Ä","Ö","Ü","Ï"
+];
 
 const COLS = 5; // fixed 5 columns for your mobile layout
 const rowsNeeded = Math.ceil(LETTERS.length / COLS);
