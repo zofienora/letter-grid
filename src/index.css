@@ -29,7 +29,9 @@ body {
   grid-template-columns: repeat(5, 1fr);
   /* rows will be set inline from JS: repeat(n, 1fr) */
   background: inherit;          /* keep page bg */
+  overflow: hidden;           /* no scrollbars when letters spill */
 }
+
 
 /* --- tile and letter --- */
 .tile {
@@ -39,6 +41,9 @@ body {
   justify-content: center;
   background: rgba(255, 255, 255, 0.6);
   cursor: pointer;
+  width: 100%; height: 100%;  /* lock to grid cell */
+  min-width: 0; min-height: 0;/* prevent min-content expansion */
+  overflow: visible;          /* allow overlap into neighbors */
   transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
 }
 
