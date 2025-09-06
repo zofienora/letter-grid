@@ -42,21 +42,13 @@ body {
   transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
 }
 
-@media (prefers-color-scheme: dark) {
-  .tile {
-    background: rgba(20,20,20,0.6);
-  }
-}
 
-.tile:focus {
-  outline: 2px solid #6366f1; /* accessible focus ring */
-  outline-offset: 2px;
-}
+
+
 
 .letter {
-  font-size: clamp(22px, 5.5vw, 36px);   /* scales on small screens */
+  font-size: clamp(52px, 5.5vw, 36px);   /* scales on small screens */
   line-height: 1;
-  transition: transform 180ms ease, color 180ms ease;
   user-select: none;
 }
 
@@ -66,11 +58,6 @@ body {
 .font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
 
 /* hover/focus effects (pure CSS) */
-.tile:hover .letter,
 .tile:focus .letter {
-  transform: rotate(6deg) scale(1.12);
-  color: #4f46e5; /* indigo */
+  transform: scale(1.12);
 }
-
-/* subtle tile lift on hover */
-.tile:hover { transform: translateY(-2px); }
