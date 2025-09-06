@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 const LETTERS = [
   "M","X","A","Ö","K",
@@ -11,14 +12,15 @@ const LETTERS = [
 
 const COLS = 5;
 const ROWS = LETTERS.length / COLS;
+const BASE = 36;    // base px font size
+const STEP = 40;    // +10px per hover
 
 export default function GridLetters() {
-  // keep track of size per letter
-  const [sizes, setSizes] = useState(Array(LETTERS.length).fill(36)); // base 36px
+  const [bumps, setBumps] = useState(Array(LETTERS.length).fill(0));
 
-  function grow(index) {
-    setSizes((prev) =>
-      prev.map((size, i) => (i === index ? size + 10 : size))
+  function grow(i) {
+    setBumps((prev) =>
+      prev.map((n, idx) => (idx === i ? n + 1 : n))
     );
   }
 
@@ -30,17 +32,28 @@ export default function GridLetters() {
         gridTemplateRows: `repeat(${ROWS}, 1fr)`,
       }}
     >
-      {LETTERS.map((ch, i) => (
-        <button
-          key={ch + i}
-          className="tile"
-          onMouseEnter={() => grow(i)}
-        >
-          <span className="letter" style={{ fontSize: `${sizes[i]}px` }}>
-            {ch}
-          </span>
-        </button>
-      ))}
+      {LETTERS.map((ch, i) => {
+        const scale = 1 + (STEP * bumps[i]) / BASE; // keeps the “+10px per hover” math
+        return (
+          <button
+            key={ch + i}
+            className="tile"
+            onMouseEnter={() => grow(i)}
+          >
+            <motion.span
+              className="letter"
+              style={{
+                fontSize: `${BASE}px`,
+                lineHeight: 1,
+              }}
+              animate={{ scale }}
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            >
+              {ch}
+            </motion.span>
+          </button>
+        );
+      })}
     </div>
   );
 }
